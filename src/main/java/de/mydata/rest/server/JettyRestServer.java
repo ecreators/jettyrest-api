@@ -73,10 +73,12 @@ public class JettyRestServer extends Server implements IEmbeddedRestServer {
 	}
 	
 	public void enableSSL(String keyStorePw, String keyManagerPw) throws FileNotFoundException {
-		String keystorePath = System.getProperty("user.home");
-		File   keystoreFile = new File(keystorePath, "keystore");
+		enableSSL(keyStorePw, keyManagerPw, new File(System.getProperty("user.home"), "keystore"));
+	}
+	
+	public void enableSSL(String keyStorePw, String keyManagerPw, File keystoreFile) throws FileNotFoundException {
 		if(!keystoreFile.exists()) {
-			throw new FileNotFoundException(keystoreFile.getAbsolutePath());
+			throw new FileNotFoundException(keystoreFile.getPath());
 		}
 		
 		enableSSL(keystoreFile, keyStorePw, keyManagerPw);
